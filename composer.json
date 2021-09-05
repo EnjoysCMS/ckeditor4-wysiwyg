@@ -1,0 +1,21 @@
+{
+  "name": "enjoyscms/ckeditor4",
+  "description": "Wysiwyg CKEditor4 for EnjoysCMS",
+  "type": "enjoyscms-wysiwyg",
+  "autoload": {
+    "psr-4": {
+      "EnjoysCMS\\WYSIWYG\\CKEditor4\\": "/"
+    }
+  },
+  "extra": {
+    "module-name": "CKEditor4 WYSIWYG Editor",
+    "use-migrations": false
+  },
+  "scripts": {
+    "post-install-cmd": "cd ./WYSIWYG/ckeditor4 && yarn install"
+  },
+  "require-dev": {
+    "enjoyscms/core": ">=3.0",
+    "phpunit/phpunit": "^9.5"
+  }
+}
