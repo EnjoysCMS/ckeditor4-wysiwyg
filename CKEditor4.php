@@ -3,6 +3,7 @@
 
 namespace EnjoysCMS\WYSIWYG\CKEditor4;
 
+use EnjoysCMS\Core\Components\Helpers\Assets;
 use EnjoysCMS\Core\Components\WYSIWYG\WysiwygInterface;
 
 class CKEditor4 implements WysiwygInterface
@@ -11,7 +12,11 @@ class CKEditor4 implements WysiwygInterface
 
     public function __construct(string $twigTemplate = null)
     {
-        $this->template = $twigTemplate ?? '@wysisyg/ckeditor5/template/basic.twig';
+        $this->template = $twigTemplate ?? '@wysisyg/ckeditor4/template/basic.twig';
+        Assets::createSymlink(
+            $_ENV['PUBLIC_DIR'] . '/assets/WYSIWYG/ckeditor4/node_modules/ckeditor4',
+            $_ENV['PROJECT_DIR'] . '/WYSIWYG/ckeditor4/node_modules/ckeditor4'
+        );
     }
 
     public function getTwigTemplate(): string
