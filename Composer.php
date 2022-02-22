@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 
-namespace EnjoysCMS\Module\CKEditor4;
+namespace EnjoysCMS\WYSIWYG\CKEditor4;
 
 use Composer\Script\Event;
 

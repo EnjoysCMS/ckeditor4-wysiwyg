@@ -16,7 +16,7 @@
     "use-migrations": false
   },
   "scripts": {
-    "assets-install": "EnjoysCMS\\Module\\CKEditor4\\Composer::assetsInstall",
+    "assets-install": "EnjoysCMS\\WYSIWYG\\CKEditor4\\Composer::assetsInstall",
     "post-install-cmd": "@assets-install",
     "post-update-cmd": "@assets-install"
   },
