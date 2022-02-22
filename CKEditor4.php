@@ -15,9 +15,12 @@ class CKEditor4 implements WysiwygInterface
         $this->template = $twigTemplate ?? '@wysisyg/ckeditor4/template/basic.twig';
         $path = str_replace($_ENV['PROJECT_DIR'], '', realpath(__DIR__));
         Assets::createSymlink(
-            sprintf('%s/assets%s/node_modules/tinymce', $_ENV['PUBLIC_DIR'], $path),
+            sprintf('%s/assets%s/node_modules/ckeditor4', $_ENV['PUBLIC_DIR'], $path),
             __DIR__ . '/node_modules/ckeditor4'
         );
+        Assets::js([
+            [__DIR__.'/node_modules/ckeditor4/ckeditor.js']
+        ]);
     }
 
     public function getTwigTemplate(): string
