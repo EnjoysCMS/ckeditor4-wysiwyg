@@ -15,10 +15,10 @@ class CKEditor4 implements WysiwygInterface
         $path = str_replace(realpath($_ENV['PROJECT_DIR']), '', realpath(__DIR__));
         Assets::createSymlink(
             sprintf('%s/assets%s/node_modules/ckeditor4', $_ENV['PUBLIC_DIR'], $path),
-            __DIR__ . '/node_modules/ckeditor4'
+            __DIR__ . '/../node_modules/ckeditor4'
         );
         Assets::js([
-            [__DIR__.'/node_modules/ckeditor4/ckeditor.js']
+            [__DIR__.'/../node_modules/ckeditor4/ckeditor.js']
         ]);
     }
 
