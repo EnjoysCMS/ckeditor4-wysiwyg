@@ -8,7 +8,7 @@
   },
   "autoload": {
     "psr-4": {
-      "EnjoysCMS\\WYSIWYG\\CKEditor4\\": "/"
+      "EnjoysCMS\\WYSIWYG\\CKEditor4\\": "src/"
     }
   },
   "extra": {
@@ -16,7 +16,7 @@
     "use-migrations": false
   },
   "scripts": {
-    "post-install-cmd": "EnjoysCMS\\WYSIWYG\\CKEditor4\\Composer::assetsInstall",
-    "post-update-cmd": "EnjoysCMS\\WYSIWYG\\CKEditor4\\Composer::assetsInstall"
+      "post-install-cmd": "EnjoysCMS\\WYSIWYG\\CKEditor4\\Composer::assetsInstall",
+      "post-update-cmd": "EnjoysCMS\\WYSIWYG\\CKEditor4\\Composer::assetsInstall"
   }
 }
