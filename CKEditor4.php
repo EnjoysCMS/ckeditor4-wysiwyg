@@ -8,12 +8,11 @@ use EnjoysCMS\Core\Components\WYSIWYG\WysiwygInterface;
 
 class CKEditor4 implements WysiwygInterface
 {
-    private string $template;
+    private string $twigTemplate;
 
-    public function __construct(string $twigTemplate = null)
+    public function __construct()
     {
-        $this->template = $twigTemplate ?? '@wysisyg/ckeditor4/template/basic.twig';
-        $path = str_replace($_ENV['PROJECT_DIR'], '', realpath(__DIR__));
+        $path = str_replace(realpath($_ENV['PROJECT_DIR']), '', realpath(__DIR__));
         Assets::createSymlink(
             sprintf('%s/assets%s/node_modules/ckeditor4', $_ENV['PUBLIC_DIR'], $path),
             __DIR__ . '/node_modules/ckeditor4'
@@ -25,13 +24,12 @@ class CKEditor4 implements WysiwygInterface
 
     public function getTwigTemplate(): string
     {
-        return $this->template;
+        return $this->twigTemplate  ?? '@wysiwyg/ckeditor4/template/basic.twig';
     }
 
-    public function setTemplate(string $template): void
+
+    public function setTwigTemplate(?string $twigTemplate): void
     {
-        $this->template = $template;
+        $this->twigTemplate = $twigTemplate;
     }
-
-
 }
