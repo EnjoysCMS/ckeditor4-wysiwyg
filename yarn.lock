@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-ckeditor4@^4.16.2:
-  version "4.16.2"
-  resolved "https://registry.yarnpkg.com/ckeditor4/-/ckeditor4-4.16.2.tgz#322e0aa22cc79cfc825345b015b29bcdd8ada3a2"
-  integrity sha512-5x2FmI+yGpQIKISh24Wp4HwjQxN6C4Lw59yh68HbFwcnMu8DvSiZLJfeINGvRG1oQ1L9GzJ5Pqd0PL0KDH08Jw==
+ckeditor4@^4.19:
+  version "4.19.0"
+  resolved "https://registry.yarnpkg.com/ckeditor4/-/ckeditor4-4.19.0.tgz#eba0af7e3e044e1f14d914ff53a128cd8d09e8a0"
+  integrity sha512-hh+SslqHmqr9xmcUVMgdmWjO4tdxW+Lzd6jfxDzzjf6zwIFIoNSflgCqUvg2wcry4w0dHgdEoxVMdoJK9E7kUw==
