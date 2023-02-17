@@ -1,35 +1,99 @@
 <?php
 
+declare(strict_types=1);
 
-namespace EnjoysCMS\WYSIWYG\CKEditor4;
+namespace EnjoysCMS\ContentEditor\CKEditor4;
 
-use EnjoysCMS\Core\Components\Helpers\Assets;
-use EnjoysCMS\Core\Components\WYSIWYG\WysiwygInterface;
+use Enjoys\AssetsCollector;
+use EnjoysCMS\Core\Components\ContentEditor\ContentEditorInterface;
+use Psr\Log\LoggerInterface;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
-class CKEditor4 implements WysiwygInterface
+final class CKEditor4 implements ContentEditorInterface
 {
-    private string $twigTemplate;
+    private ?string $selector = null;
 
-    public function __construct()
+    /**
+     * @throws \Exception
+     */
+    public function __construct(
+        private Environment $twig,
+        private AssetsCollector\Assets $assets,
+        private LoggerInterface $logger,
+        private ?string $template = null
+    ) {
+        if (!file_exists(__DIR__ . '/../node_modules/ckeditor4')) {
+            $command = sprintf('cd %s && yarn install', realpath(__DIR__ . '/..'));
+            try {
+                $result = passthru($command);
+                if ($result === false) {
+                    throw new \Exception();
+                }
+            } catch (\Throwable) {
+                throw new \RuntimeException(sprintf('Run: %s', $command));
+            }
+        }
+
+        $this->initialize();
+    }
+
+    private function getTemplate(): ?string
     {
-        $path = str_replace(realpath($_ENV['PROJECT_DIR']), '', realpath(__DIR__));
-        Assets::createSymlink(
+        return $this->template ?? __DIR__ . '/../template/basic.twig';
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function initialize(): void
+    {
+        $path = str_replace(getenv('ROOT_PATH'), '', realpath(__DIR__ . '/../'));
+        AssetsCollector\Helpers::createSymlink(
             sprintf('%s/assets%s/node_modules/ckeditor4', $_ENV['PUBLIC_DIR'], $path),
-            __DIR__ . '/../node_modules/ckeditor4'
+            __DIR__ . '/../node_modules/ckeditor4',
+            $this->logger
         );
-        Assets::js([
-            [__DIR__.'/../node_modules/ckeditor4/ckeditor.js']
+        $this->assets->add('js', [
+            [__DIR__ . '/../node_modules/ckeditor4/ckeditor.js']
         ]);
     }
 
-    public function getTwigTemplate(): string
+
+    public function setSelector(string $selector): void
     {
-        return $this->twigTemplate  ?? '@wysiwyg/ckeditor4/template/basic.twig';
+        $this->selector = $selector;
     }
 
-
-    public function setTwigTemplate(?string $twigTemplate): void
+    public function getSelector(): string
     {
-        $this->twigTemplate = $twigTemplate;
+        if ($this->selector === null) {
+            throw new \RuntimeException('Selector not set');
+        }
+        return $this->selector;
+    }
+
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
+    public function getEmbedCode(): string
+    {
+        $twigTemplate = $this->getTemplate();
+        if (!$this->twig->getLoader()->exists($twigTemplate)) {
+            throw new \RuntimeException(
+                sprintf("ContentEditor: (%s): Нет шаблона в по указанному пути: %s", self::class, $twigTemplate)
+            );
+        }
+        return $this->twig->render(
+            $twigTemplate,
+            [
+                'editor' => $this,
+                'selector' => $this->getSelector()
+            ]
+        );
     }
 }
