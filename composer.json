@@ -14,11 +14,11 @@
   "scripts": {
       "ckeditor4-assets-install": "EnjoysCMS\\ContentEditor\\CKEditor4\\Composer\\Scripts\\AssetsInstallCommand",
       "post-install-cmd": [
-          "echo -e \"\\x1b[1mCKEditor 4\\x1b[00m\"",
+          "@print-module-name CKEditor 4",
           "@ckeditor4-assets-install"
       ],
       "post-update-cmd": [
-          "echo -e \"\\x1b[1mCKEditor 4\\x1b[00m\"",
+          "@print-module-name CKEditor 4",
           "@ckeditor4-assets-install"
       ]
   }
